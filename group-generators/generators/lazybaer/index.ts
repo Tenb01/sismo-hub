@@ -33,6 +33,8 @@ const generator: GroupGenerator = {
       {
         name: "lazybaer",
         timestamp: context.timestamp,
+        description: "be a lazybaer fren",
+        specs: "",
         data: dataUnion,
         valueType: ValueType.Score,
         tags: [Tags.Factory],
