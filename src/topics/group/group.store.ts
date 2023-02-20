@@ -64,14 +64,15 @@ export abstract class GroupStore {
     const nameHash = BigNumber.from(keccak256(toUtf8Bytes(name)));
     let newId = nameHash.mod(UINT128_MAX).toHexString();
 
-    const groups = await this.all();
-    const groupWithSameId = Object.values(groups).find(
-      (group) => group.id === newId
+    // TODO: refactor groupStore to search from an id instead of a name
+    const groupsWithSameName = (await this.search({ groupName: name })).filter(
+      (group) => group.name === name
     );
-    if (groupWithSameId) {
-      newId = BigNumber.from(newId).add(1).toHexString();
+    if (groupsWithSameName.length > 0) {
+      newId = BigNumber.from(newId)
+        .add(groupsWithSameName.length)
+        .toHexString();
     }
-
     return newId;
   }
 }
